@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arkadaş Edin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: white;
+            color: #563;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            color: #2575fc;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            color: #6a11cb;
+        }
+        
+        .user-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .user-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            width: 300px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .user-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .user-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 4px solid #2575fc;
+        }
+        
+        .user-info {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .user-name {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            color: #2575fc;
+        }
+        
+        .user-title {
+            color: #6a11cb;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .user-desc {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .view-profile {
+            background: #2575fc;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: inline-block;
+        }
+        
+        .view-profile:hover {
+            background: #6a11cb;
+        }
+        
+        .profile-section {
+            display: none;
+            width: 100%;
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .profile-img-container {
+            flex: 1;
+            min-width: 250px;
+            max-width: 300px;
+            margin-right: 30px;
+        }
+        
+        .profile-img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-info {
+            flex: 2;
+            min-width: 300px;
+        }
+        
+        .profile-name {
+            font-size: 2.2rem;
+            color: #2575fc;
+            margin-bottom: 5px;
+        }
+        
+        .profile-title {
+            color: #6a11cb;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .profile-about {
+            margin-bottom: 25px;
+            line-height: 1.6;
+            color: #555;
+        }
+        
+        .profile-about h3 {
+            color: #2575fc;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .other-members {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+        
+        .other-members h3 {
+            color: #2575fc;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .other-members-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .other-member-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            width: 200px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        
+        .other-member-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .other-member-img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        
+        .other-member-info {
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .other-member-name {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: #2575fc;
+        }
+        
+        .other-member-title {
+            color: #6a11cb;
+            font-size: 0.9rem;
+        }
+        
+        .back-button {
+            background: #6a11cb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        
+        .back-button:hover {
+            background: #2575fc;
+        }
+        
+        /* WhatsApp İkonu ve Bize Ulaşın */
+        .whatsapp-float {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            display: flex;
+            align-items: center;
+            background: #25D366;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        
+        .whatsapp-float:hover {
+            background: #128C7E;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .whatsapp-icon {
+            font-size: 24px;
+            margin-right: 8px;
+        }
+        
+        .whatsapp-text {
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-img-container {
+                margin-right: 0;
+                margin-bottom: 20px;
+                max-width: 100%;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .profile-name {
+                font-size: 1.8rem;
+            }
+            
+            .whatsapp-text {
+                display: none;
+            }
+            
+            .whatsapp-float {
+                padding: 12px;
+            }
+            
+            .whatsapp-icon {
+                margin-right: 0;
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WhatsApp İkonu ve Bize Ulaşın -->
+    <a href="https://wa.me/905551234567" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp whatsapp-icon"></i>
+        <span class="whatsapp-text">Bize Ulaşın</span>
+    </a>
+
+    <div class="container">
+        <header>
+            <h1> </h1>
+            <p class="subtitle">Ekibimizde yer alan profesyonelleri tanıyın</p>
+        </header>
+        
+        <div class="user-cards">
+            <!-- Üye 1 -->
+            <div class="user-card" onclick="showProfile(1)">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Ahmet Yılmaz" class="user-img">
+                <div class="user-info">
+                    <h3 class="user-name">Ahmet Yılmaz</h3>
+                    <p class="user-title">Yazılım Geliştirici</p>
+                    <p class="user-desc">JavaScript ve Python uzmanı. Modern web uygulamaları geliştiriyor.</p>
+                    <div class="view-profile">Profili Görüntüle</div>
+                </div>
+            </div>
+            
+            <!-- Üye 2 -->
+            <div class="user-card" onclick="showProfile(2)">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80" alt="Gizem" class="user-img">
+                <div class="user-info">
+                    <h3 class="user-name">Gizem</h3>
+                    <p class="user-title">UI/UX Tasarımcı</p>
+                    <p class="user-desc">Modern ve kullanıcı dostu arayüzler tasarlıyor.</p>
+                    <div class="view-profile">Profili Görüntüle</div>
+                </div>
+            </div>
+            
+            <!-- Üye 3 -->
+            <div class="user-card" onclick="showProfile(3)">
+                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Mehmet Kaya" class="user-img">
+                <div class="user-info">
+                    <h3 class="user-name">Mehmet Kaya</h3>
+                    <p class="user-title">Veri Bilimci</p>
+                    <p class="user-desc">Yapay zeka ve makine öğrenmesi projeleri geliştiriyor.</p>
+                    <div class="view-profile">Profili Görüntüle</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Profil Bölümleri -->
+        <div id="profile1" class="profile-section">
+            <button class="back-button" onclick="hideAllProfiles()">&larr; Geri Dön</button>
+            <div class="profile-header">
+                <div class="profile-img-container">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Ahmet Yılmaz" class="profile-img">
+                </div>
+                <div class="profile-info">
+                    <h2 class="profile-name">Ahmet Yılmaz</h2>
+                    <p class="profile-title">Yazılım Geliştirici</p>
+                    <div class="profile-about">
+                        <h3>Hakkında</h3>
+                        <p>10 yıllık yazılım geliştirme deneyimine sahibim. JavaScript ve Python başta olmak üzere çeşitli programlama dillerinde uzmanım. Modern web uygulamaları ve mobil uygulama geliştirme konusunda deneyimliyim. Açık kaynak projelere katkıda bulunmaktan ve yeni teknolojiler öğrenmekten keyif alıyorum.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="other-members">
+                <h3>Diğer Takım Üyeleri</h3>
+                <div class="other-members-cards">
+                    <div class="other-member-card" onclick="showProfile(2)">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80" alt="Gizem" class="other-member-img">
+                        <div class="other-member-info">
+                            <h4 class="other-member-name">Gizem</h4>
+                            <p class="other-member-title">UI/UX Tasarımcı</p>
+                        </div>
+                    </div>
+                    <div class="other-member-card" onclick="showProfile(3)">
+                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Mehmet Kaya" class="other-member-img">
+                        <div class="other-member-info">
+                            <h4 class="other-member-name">Mehmet Kaya</h4>
+                            <p class="other-member-title">Veri Bilimci</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="profile2" class="profile-section">
+            <button class="back-button" onclick="hideAllProfiles()">&larr; Geri Dön</button>
+            <div class="profile-header">
+                <div class="profile-img-container">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80" alt="Gizem" class="profile-img">
+                </div>
+                <div class="profile-info">
+                    <h2 class="profile-name">Gizem</h2>
+                    <p class="profile-title">UI/UX Tasarım Uzmanı</p>
+                    <div class="profile-about">
+                        <h3>Hakkında</h3>
+                        <p>Kullanıcı odaklı tasarım anlayışıyla modern ve işlevsel arayüzler tasarlıyorum. 6 yıllık deneyimimle finans, sağlık ve e-ticaret sektörlerinde birçok projede yer aldım. Kullanıcı deneyimini iyileştirmek için sürekli araştırma yapmayı ve test etmeyi seviyorum. Tasarım sistemleri oluşturmak ve tutarlı kullanıcı arayüzleri geliştirmek konusunda uzmanım.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="other-members">
+                <h3>Diğer Takım Üyeleri</h3>
+                <div class="other-members-cards">
+                    <div class="other-member-card" onclick="showProfile(1)">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Ahmet Yılmaz" class="other-member-img">
+                        <div class="other-member-info">
+                            <h4 class="other-member-name">Ahmet Yılmaz</h4>
+                            <p class="other-member-title">Yazılım Geliştirici</p>
+                        </div>
+                    </div>
+                    <div class="other-member-card" onclick="showProfile(3)">
+                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Mehmet Kaya" class="other-member-img">
+                        <div class="other-member-info">
+                            <h4 class="other-member-name">Mehmet Kaya</h4>
+                            <p class="other-member-title">Veri Bilimci</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="profile3" class="profile-section">
+            <button class="back-button" onclick="hideAllProfiles()">&larr; Geri Dön</button>
+            <div class="profile-header">
+                <div class="profile-img-container">
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Mehmet Kaya" class="profile-img">
+                </div>
+                <div class="profile-info">
+                    <h2 class="profile-name">Mehmet Kaya</h2>
+                    <p class="profile-title">Veri Bilimi Uzmanı</p>
+                    <div class="profile-about">
+                        <h3>Hakkında</h3>
+                        <p>Büyük veri analizi, yapay zeka ve makine öğrenmesi projeleri üzerine çalışıyorum. Veri görselleştirme ve tahmine dayalı modelleme konularında uzmanım. Farklı sektörlerde veri odaklı çözümler geliştiriyorum. Veriden anlamlı içgörüler çıkarmak ve iş problemlerine çözümler üretmek benim için bir tutku. Python, R and SQL gibi araçları etkin bir şekilde kullanıyorum.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="other-members">
+                <h3>Diğer Takım Üyeleri</h3>
+                <div class="other-members-cards">
+                    <div class="other-member-card" onclick="showProfile(1)">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="Ahmet Yılmaz" class="other-member-img">
+                        <div class="other-member-info">
+                            <h4 class="other-member-name">Ahmet Yılmaz</h4>
+                            <p class="other-member-title">Yazılım Geliştirici</p>
+                        </div>
+                    </div>
+                    <div class="other-member-card" onclick="showProfile(2)">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80" alt="Gizem" class="other-member-img">
+                        <div class="other-member-info">
+                            <h4 class="other-member-name">Gizim</h4>
+                            <p class="other-member-title">UI/UX Tasarımcı</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Tüm profilleri gizle
+        function hideAllProfiles() {
+            document.querySelectorAll('.profile-section').forEach(profile => {
+                profile.style.display = 'none';
+            });
+            
+            // Sayfayı en üste kaydır
+            window.scrollTo(0, 0);
+        }
+        
+        // Belirli bir profili göster
+        function showProfile(userId) {
+            // Önce tüm profilleri gizle
+            hideAllProfiles();
+            
+            // İlgili profili göster
+            const profile = document.getElementById('profile' + userId);
+            if (profile) {
+                profile.style.display = 'block';
+                
+                // Profil bölümüne kaydır
+                setTimeout(() => {
+                    profile.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            }
+        }
+        
+        // Sayfa yüklendiğinde tüm profilleri gizle
+        document.addEventListener('DOMContentLoaded', hideAllProfiles);
+        
+        // URL'de profil ID varsa o profili göster
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const profileId = urlParams.get('profile');
+            if (profileId) {
+                showProfile(profileId);
+            }
+        });
+    </script>
+</body>
+</html>
